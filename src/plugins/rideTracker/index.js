@@ -1,15 +1,15 @@
 import Joi from 'joi'
 import pkg from './package'
 
-export default  {
-  // name: 'people',
+export default {
+  // name: 'rideTracker',
   // version: '1.0.0',
   pkg,
   async register(server, options = {}) {
     server.route([
       {
         method: 'GET',
-        path: '/v1/people',
+        path: '/v1/ride',
         options: {
           tags: ['api']
         },
@@ -19,21 +19,22 @@ export default  {
       },
       {
         method: 'POST',
-        path: '/v1/people',
+        path: '/v1/ride',
         options: {
           tags: ['api'],
           validate: {
             payload: {
-              firstName: Joi.string().required(),
-              lastName: Joi.string().required(),
-              email: Joi.string().email().trim().lowercase().required(),
-              age: Joi.number().min(0).max(120).required()
+              name: Joi.string().required(),
+              imgURL: Joi.string().required(),
+              loc: Joi.string().required(),
+              desc: Joi.string().required(),
+              height: Joi.number().min(0).max(1000).required()
             }
           }
         },
         async handler(request, h) {
-          const person = request.payload
-          return person
+          const ride = request.payload
+          return ride
         }
       }
     ])
